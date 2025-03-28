@@ -1,4 +1,4 @@
-package com.ads.java_tutorial_short;
+package com.ads.Assignments;
 
 public class Assignment_1 {
 
