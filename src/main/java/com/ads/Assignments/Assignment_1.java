@@ -4,7 +4,6 @@ public class Assignment_1 {
 
     // O(n)
     public static int probOne(int[] array, int n) {
-        // Base Case
         if (n == 1) {
             return array[0];
         }
@@ -23,7 +22,6 @@ public class Assignment_1 {
 
     // O(n)
     public static boolean probThree(int n, int i) {
-        // Base case
         if (n <= 1) {
             return false;
         }
@@ -39,7 +37,6 @@ public class Assignment_1 {
 
     // O(n)
     public static long probFour(int n) {
-        // base case
         if (n <= 1) {
             return 1;
         }
@@ -56,12 +53,10 @@ public class Assignment_1 {
 
     // O(n)
     public static long probSix(int n, int a) {
-        // base case
         if (n == 0) {
             return 1;
         }
 
-        // recursive case
         return a * probSix(n - 1, a);
     }
 
@@ -83,7 +78,6 @@ public class Assignment_1 {
 
     // O(n)
     public static boolean probEight(String TestString, int index) {
-        // base case
         if (index == TestString.length()) {
             return true;
         }
@@ -97,18 +91,15 @@ public class Assignment_1 {
 
     // O(2^n)
     public static int probNine(int n, int k) {
-        // base case
         if (k == 0 || k == n) {
             return 1;
         }
 
-        // recursive case
         return probNine(n - 1, k - 1) + probNine(n - 1, k);
     }
 
     // O(log(min(a, b)))
     public static int probTen(int a, int b) {
-        // base case
         if (b == 0) {
             return a;
         }
