@@ -1,5 +1,6 @@
 package com.ads.Assignments.Assignment_2;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class MyArrayList<T> implements MyList<T> {
@@ -158,14 +159,68 @@ public class MyArrayList<T> implements MyList<T> {
         return obj1.toString().compareTo(obj2.toString());
     }
 
-    
+    @Override
+    public int indexOf(Object object) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(object)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int lastIndexOf(Object object) {
+        for (int i = size - 1; i >= 0; i--) {
+            if (elements[i].equals(object)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean exists(Object object) {
+        return indexOf(object) >= 0;
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] array = new Object[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = elements[i];
+        }
+        return array;
+    }
+
+    @Override
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (T) elements[currentIndex++];
+            }
+        };
+
+    }
+
 }
-// void removeLast();
-// void sort();
-// int indexOf(Object object);
-// int lastIndexOf(Object object);
-// boolean exists(Object object);
-// public Object[] toArray();
-// void clear();
-// int size();
-// boolean isEmpty();
