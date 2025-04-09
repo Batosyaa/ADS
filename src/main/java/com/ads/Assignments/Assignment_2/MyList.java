@@ -19,4 +19,6 @@ public interface MyList<T> extends Iterable<T> {
     public Object[] toArray();
     void clear();
     int size();
+    boolean isEmpty();
+
 }
