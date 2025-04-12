@@ -1,4 +1,4 @@
-package com.ads.Assignments.Assignment_2;
+package com.ads.Assignments.assignment_2;
 
 public interface MyList<T> extends Iterable<T> {
     void add(T item);
