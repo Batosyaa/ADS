@@ -38,4 +38,12 @@ public class MyQueue<T> {
     public void clear() {
         list.clear();
     }
+
+    public void printList() {
+        Object[]array = list.toArray();
+        System.out.println("[");
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i]);
+        }
+    }
 }
