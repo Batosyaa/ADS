@@ -9,7 +9,7 @@ public class MyMinHeap<T extends Comparable<T>> {
     
     public void insert(T item) {
         heap.addLast(item);
-        siftUp(heap.size() - 1);
+        shiftUp(heap.size() - 1);
     }
     
     public T extractMin() {
@@ -24,7 +24,7 @@ public class MyMinHeap<T extends Comparable<T>> {
         heap.removeLast();
         
         if (!isEmpty()) {
-            siftDown(0);
+            shiftDown(0);
         }
         
         return min;
@@ -49,7 +49,7 @@ public class MyMinHeap<T extends Comparable<T>> {
         heap.clear();
     }
     
-    private void siftUp(int index) {
+    private void shiftUp(int index) {
         int parentIndex = getParentIndex(index);
         
         if (index > 0 && heap.get(index).compareTo(heap.get(parentIndex)) < 0) {
@@ -57,11 +57,11 @@ public class MyMinHeap<T extends Comparable<T>> {
             heap.set(index, heap.get(parentIndex));
             heap.set(parentIndex, temp);
             
-            siftUp(parentIndex);
+            shiftUp(parentIndex);
         }
     }
     
-    private void siftDown(int index) {
+    private void shiftDown(int index) {
         int leftChildIndex = getLeftChildIndex(index);
         int rightChildIndex = getRightChildIndex(index);
         int smallest = index;
@@ -80,7 +80,7 @@ public class MyMinHeap<T extends Comparable<T>> {
             T temp = heap.get(index);
             heap.set(index, heap.get(smallest));
             heap.set(smallest, temp);
-            siftDown(smallest);
+            shiftDown(smallest);
         }
     }
     

@@ -10,7 +10,24 @@ public class MyQueue<T> {
     public void enqueue(T item) {
         list.addLast(item);
     }
-    
+
+    public boolean offer(T item) {
+        if (item == null) {
+            return false;
+        } else {
+            list.addLast(item);
+            return true;
+        }
+    }
+
+    public void add(T item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Failed to insert item: " + item);
+        } else {
+            list.addLast(item);
+        }
+    }
+
     public T dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
@@ -19,16 +36,43 @@ public class MyQueue<T> {
         list.removeFirst();
         return item;
     }
-    
-    public T peek() {
+
+    public T remove() {
         if (isEmpty()) {
-            throw new IllegalStateException("Queue is empty");
+            return null;
+        } else {
+            list.removeFirst();
         }
         return list.getFirst();
     }
     
+    public T poll() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        }
+        T item = list.getFirst();
+        list.removeFirst();
+        return item;
+    }
+
+    public T peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        } 
+        return list.getFirst();
+    }
+
+    public void element() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        } else {
+            list.getFirst();
+        }
+    }
+    
     public boolean isEmpty() {
-        return list.size() == 0;
+        boolean answ = list.size() == 0;
+        return answ;
     }
     
     public int size() {
@@ -41,9 +85,10 @@ public class MyQueue<T> {
 
     public void printList() {
         Object[]array = list.toArray();
-        System.out.println("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
+        System.out.print("[");
+        for (Object array1 : array) {
+            System.out.print(array1 + " ");
         }
+        System.out.println("]");
     }
 }
