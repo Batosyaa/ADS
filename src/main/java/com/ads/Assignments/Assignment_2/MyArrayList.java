@@ -6,13 +6,16 @@ import java.util.NoSuchElementException;
 public class MyArrayList<T> implements MyList<T> {
     private Object[] elements;
     private int size;
-    private static final int DEFAULT_CAPACITY = 10; // Copilot adviced to add it, must know about that later
+    private static final int DEFAULT_CAPACITY = 10; 
+
+    // defined main parts: elements, size, and default capacity
 
     public MyArrayList() {
         elements = new Object[DEFAULT_CAPACITY];
         size = 0;
     }
 
+    // Overriding methods from MyList interface
     @Override
     public int size() {
         return size;
@@ -128,7 +131,7 @@ public class MyArrayList<T> implements MyList<T> {
         remove(size - 1);
     }
 
-    @Override
+    @Override // Simple bubble sort implementation
     public void sort() {
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
@@ -151,7 +154,6 @@ public class MyArrayList<T> implements MyList<T> {
         if (obj2 == null) {
             return 1;
         }
-
         if (obj1 instanceof Comparable) {
             return ((Comparable<Object>) obj1).compareTo(obj2);
         }
@@ -159,7 +161,7 @@ public class MyArrayList<T> implements MyList<T> {
         return obj1.toString().compareTo(obj2.toString());
     }
 
-    @Override
+    @Override 
     public int indexOf(Object object) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(object)) {
