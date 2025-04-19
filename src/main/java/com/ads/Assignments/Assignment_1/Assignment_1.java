@@ -1,4 +1,4 @@
-package com.ads.Assignments;
+package com.ads.Assignments.Assignment_1;
 
 public class Assignment_1 {
 

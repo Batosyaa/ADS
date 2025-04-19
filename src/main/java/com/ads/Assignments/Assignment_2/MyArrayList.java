@@ -148,12 +148,6 @@ public class MyArrayList<T> implements MyList<T> {
         if (obj1 == null & obj2 == null) {
             return 0;
         }
-        if (obj1 == null) {
-            return -1;
-        }
-        if (obj2 == null) {
-            return 1;
-        }
         if (obj1 instanceof Comparable) {
             return ((Comparable<Object>) obj1).compareTo(obj2);
         }
@@ -187,6 +181,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
+    @SuppressWarnings("ManualArrayToCollectionCopy")
     public Object[] toArray() {
         Object[] array = new Object[size];
         for (int i = 0; i < size; i++) {
