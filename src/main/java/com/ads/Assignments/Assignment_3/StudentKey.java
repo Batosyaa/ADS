@@ -1,10 +1,8 @@
-package com.ads.Assignments.Assignment_3;
-
-import java.util.Objects;
+package com.ads.assignments.assignment_3;
 
 public class StudentKey {
-    private String name;
-    private int id;
+    private final String name;
+    private final int id;
 
     public StudentKey(String name, int id) {
         this.name = name;
@@ -24,19 +22,21 @@ public class StudentKey {
         if (this == o) return true;
         if (!(o instanceof StudentKey)) return false;
         StudentKey that = (StudentKey) o;
-        return id == that.id && Objects.equals(name, that.name);
+        if (this.id != that.id) return false;
+        if (this.name == null && that.name != null) return false;
+        return !(this.name != null && !this.name.equals(that.name));
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 29 * result + id;
+        int result = 17;
+        result = 31 * result + (name == null ? 0 : name.length() * 13);
+        result = 31 * result + id;
         return result;
     }
-    
+
     @Override
     public String toString() {
         return "{" + "name: " + name + ", id: " + id + "}";
     }
-    
 }

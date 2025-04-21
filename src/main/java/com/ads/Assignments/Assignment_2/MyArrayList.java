@@ -1,4 +1,4 @@
-package com.ads.Assignments.assignment_2;
+package com.ads.assignments.assignment_2;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

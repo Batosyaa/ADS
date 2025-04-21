@@ -1,4 +1,4 @@
-package com.ads.Assignments.assignment_2;
+package com.ads.assignments.assignment_2;
 
 
 // This class is for the Stack API with main functions for the stack

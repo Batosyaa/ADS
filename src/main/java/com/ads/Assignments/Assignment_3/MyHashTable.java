@@ -1,12 +1,11 @@
-package com.ads.Assignments.Assignment_3;
-
+package com.ads.assignments.assignment_3;
 
 public class MyHashTable<K, V> {
-    
-    private class HashNode {
+
+    private class HashNode<K, V> {
         K key;
         V value;
-        HashNode next;
+        HashNode<K, V> next;
 
         public HashNode(K key, V value) {
             this.key = key;
@@ -15,18 +14,18 @@ public class MyHashTable<K, V> {
         }
     }
 
-    private final HashNode[] chainArray;
+    private final HashNode<K, V>[] chainArray;
     private int M = 16;
     private int size;
 
     public MyHashTable() {
-        chainArray = (HashNode[]) new Object[M];
+        chainArray = (HashNode<K, V>[]) new HashNode[M];
         size = 0;
     }
 
     public MyHashTable(int M) {
         this.M = M;
-        chainArray = (HashNode[]) new Object[M];
+        chainArray = (HashNode<K, V>[]) new HashNode[M];
         size = 0;
     }
 
@@ -40,8 +39,8 @@ public class MyHashTable<K, V> {
         }
 
         int index = hash(key);
+        HashNode<K, V> current = chainArray[index];
 
-        HashNode current = chainArray[index];
         while (current != null) {
             if (current.key.equals(key)) {
                 current.value = value;
@@ -50,7 +49,7 @@ public class MyHashTable<K, V> {
             current = current.next;
         }
 
-        HashNode newNode = new HashNode(key, value);
+        HashNode<K, V> newNode = new HashNode<>(key, value);
         newNode.next = chainArray[index];
         chainArray[index] = newNode;
         size++;
@@ -62,7 +61,7 @@ public class MyHashTable<K, V> {
         }
 
         int index = hash(key);
-        HashNode current = chainArray[index];
+        HashNode<K, V> current = chainArray[index];
 
         while (current != null) {
             if (current.key.equals(key)) {
@@ -79,23 +78,20 @@ public class MyHashTable<K, V> {
         }
 
         int index = hash(key);
-        HashNode current = chainArray[index];
-        HashNode prev = null;
+        HashNode<K, V> current = chainArray[index];
+        HashNode<K, V> prev = null;
 
         while (current != null) {
-            if (current.equals(key)) {
-                V value = current .value;
-            
+            if (current.key.equals(key)) {
+                V value = current.value;
                 if (prev == null) {
                     chainArray[index] = current.next;
                 } else {
                     prev.next = current.next;
                 }
-                
                 size--;
                 return value;
             }
-
             prev = current;
             current = current.next;
         }
@@ -108,7 +104,7 @@ public class MyHashTable<K, V> {
         }
 
         for (int i = 0; i < M; i++) {
-            HashNode current = chainArray[i];
+            HashNode<K, V> current = chainArray[i];
             while (current != null) {
                 if (current.value.equals(value)) {
                     return true;
@@ -116,7 +112,6 @@ public class MyHashTable<K, V> {
                 current = current.next;
             }
         }
-
         return false;
     }
 
@@ -126,7 +121,7 @@ public class MyHashTable<K, V> {
         }
 
         for (int i = 0; i < M; i++) {
-            HashNode current = chainArray[i];
+            HashNode<K, V> current = chainArray[i];
             while (current != null) {
                 if (current.value.equals(value)) {
                     return current.key;
@@ -135,5 +130,38 @@ public class MyHashTable<K, V> {
             }
         }
         return null;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void printBucketSizes() {
+        for (int i = 0; i < M; i++) {
+            int count = 0;
+            HashNode<K, V> current = chainArray[i];
+            while (current != null) {
+                count++;
+                current = current.next;
+            }
+            System.out.println("Bucket " + i + ": " + count + " entries.");
+        }
+
+        int total = 0, min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int i = 0; i < M; i++) {
+           int count = 0;
+           HashNode current = chainArray[i];
+           while (current != null) {
+           count++;
+           current = current.next;
+        }
+        total += count;
+        if (count < min) min = count;
+        if (count > max) max = count;
+        }
+        System.out.println("Total elements: " + total);
+        System.out.println("Min bucket size: " + min);
+        System.out.println("Max bucket size: " + max);
+        System.out.println("Average bucket size: " + (total / M));
     }
 }

@@ -1,4 +1,4 @@
-package com.ads.Assignments.assignment_2;
+package com.ads.assignments.assignment_2;
 
 public class MyMinHeap<T extends Comparable<T>> {
     private final MyArrayList<T> heap;

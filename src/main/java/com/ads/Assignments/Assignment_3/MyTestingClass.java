@@ -1,24 +1,41 @@
-package com.ads.Assignments.Assignment_3;
-
-import java.util.Random;
+package com.ads.assignments.assignment_3;
 
 public class MyTestingClass {
-    public static void main(String[] args) {
-        int M = 80;
-        MyHashTable<StudentKey, StudentVal> hashTable = new MyHashTable<>(M);
-        Random random = new Random();
+    private final int id;
+    private final String code;
 
-        String[] sampleNames = {"John", "Jane", "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Hannah"};
+    public MyTestingClass(int id, String code) {
+        this.id = id;
+        this.code = code;
+    }
 
-        for (int i = 0; i < 10_000; i++) {
-            String keyName = sampleNames[random.nextInt(sampleNames.length)];
-            int keyId = random.nextInt(10000);
-            StudentKey key = new StudentKey(keyName, keyId);
+    public int getId() {
+        return id;
+    }
 
-            String studentName = sampleNames[random.nextInt(sampleNames.length)];
-            int studentAge = 17 + random.nextInt(10);
-            double studentGpa = 2.0 + random.nextDouble() * 1.5;
-            StudentVal value = new StudentVal(studentName, studentAge, studentGpa);
-        }
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MyTestingClass)) return false;
+        MyTestingClass that = (MyTestingClass) o;
+        if (this.id != that.id) return false;
+        return this.code != null ? this.code.equals(that.code) : that.code == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = 31 * hash + id;
+        hash = 31 * hash + (code == null ? 0 : code.length() * 13);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "MyTestingClass{id=" + id + ", code='" + code + "'}";
     }
 }

@@ -1,4 +1,4 @@
-package com.ads.Assignments.assignment_2;
+package com.ads.assignments.assignment_2;
 public class main {
     public static void main(String[] args) {
         MyQueue<Integer> TestQueue = new MyQueue<>();
