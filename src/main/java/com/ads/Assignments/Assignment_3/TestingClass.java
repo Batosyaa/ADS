@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class TestingClass {
     public static void main(String[] args) {
-        MyHashTable<MyTestingClass, StudentVal> table = new MyHashTable<>(97);
+        MyHashTable<MyTestingClass, StudentVal> table = new MyHashTable<>(250);
         Random random = new Random();
 
         for (int i = 0; i < 10000; i++) {
@@ -12,7 +12,6 @@ public class TestingClass {
             StringBuilder code = new StringBuilder();
             for (int j = 0; j < 10; j++) {
                 code.append((char) ('A' + random.nextInt(26)));
-                System.out.println("Partial code: " + j + code);
             }
             code.append(random.nextInt(10000));
 

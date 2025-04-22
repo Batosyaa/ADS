@@ -71,7 +71,6 @@ public class MyArrayList<T> implements MyList<T> {
         add(0, item);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
@@ -85,7 +84,6 @@ public class MyArrayList<T> implements MyList<T> {
         return size == 0;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T getFirst() {
         if (isEmpty()) {
@@ -144,6 +142,7 @@ public class MyArrayList<T> implements MyList<T> {
         }
     }
 
+    @SuppressWarnings("null")
     private int compare(Object obj1, Object obj2) {
         if (obj1 == null & obj2 == null) {
             return 0;

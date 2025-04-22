@@ -27,12 +27,17 @@ public class StudentKey {
         return !(this.name != null && !this.name.equals(that.name));
     }
 
+    
     @Override
     public int hashCode() {
-        int result = 17;
-        result = 31 * result + (name == null ? 0 : name.hashCode());
-        result = 31 * result + id;
-        return result;
+        int hash = 17;
+        hash = 31 * hash + id;
+        if (name != null) {
+            for (int i = 0; i < name.length(); i++) {
+                hash = 31 * hash + name.charAt(i);
+            }
+        }
+    return hash;
     }
 
     @Override
