@@ -48,6 +48,7 @@ public class MyHashTable<K, V> {
             }
             current = current.next;
         }
+        
 
         HashNode<K, V> newNode = new HashNode<>(key, value);
         newNode.next = chainArray[index];
@@ -163,5 +164,6 @@ public class MyHashTable<K, V> {
         System.out.println("Min bucket size: " + min);
         System.out.println("Max bucket size: " + max);
         System.out.println("Average bucket size: " + (total / M));
+        System.out.println("Difference between MIN and MAX bucket size: " + (max - min));
     }
 }

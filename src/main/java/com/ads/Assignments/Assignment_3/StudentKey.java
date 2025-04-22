@@ -30,7 +30,7 @@ public class StudentKey {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (name == null ? 0 : name.length() * 13);
+        result = 31 * result + (name == null ? 0 : name.hashCode());
         result = 31 * result + id;
         return result;
     }

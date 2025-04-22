@@ -30,9 +30,14 @@ public class MyTestingClass {
     public int hashCode() {
         int hash = 17;
         hash = 31 * hash + id;
-        hash = 31 * hash + (code == null ? 0 : code.length() * 13);
-        return hash;
+        if (code != null) {
+            for (int i = 0; i < code.length(); i++) {
+                hash = 31 * hash + code.charAt(i);
+            }
+        }
+    return hash;
     }
+
 
     @Override
     public String toString() {
