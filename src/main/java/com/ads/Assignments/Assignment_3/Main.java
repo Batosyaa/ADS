@@ -1,7 +1,7 @@
 package com.ads.assignments.assignment_3;
 import java.util.Random;
 
-public class TestingClass {
+public class Main {
     public static void main(String[] args) {
         MyHashTable<MyTestingClass, StudentVal> table = new MyHashTable<>(250);
         Random random = new Random();

@@ -37,7 +37,7 @@ public class StudentKey {
                 hash = 31 * hash + name.charAt(i);
             }
         }
-    return hash;
+        return hash;
     }
 
     @Override
