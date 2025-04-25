@@ -12,21 +12,22 @@ public class MyBST<K extends Comparable<K>, V> {
         }
     }
 
+    private Node put(Node x, K key, V val) {
+        int compare = key.compareTo(key);
+        if (compare < 0) {
+            x.left = put(x.left, key, val);
+        }
+        else if (compare > 0) {
+            x.right = put(x.right, key, val);
+        } else x.val = val;
+        return x;
+    }
+
     public void put(K key, V val) {
-
+        root = put(root, key, val);
     }
 
-    public V get(K key) {
-
-    }
-
-    public void delete(K key) {
-
-    }
-
-    public Iterable<K> iterator() {
-
-    }
+    
 
 
     
