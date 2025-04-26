@@ -27,5 +27,27 @@ public class Main {
         }
         
         table.printBucketSizes();
+
+        System.out.println("\nNow Testing Binary Search Tree...");
+
+        MyBST<Integer, String> bst = new MyBST<>();
+
+        long startTime = System.currentTimeMillis();
+
+        for (int i = 0; i < 10000; i++) {
+            int randomKey = random.nextInt(1_000_000);
+            bst.put(randomKey, "Student" + i);
+        }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time BST takes: " + (endTime - startTime) + " ms");
+
+        System.out.println("First 10 keys (in sorted order): ");
+        int count = 0;
+        for (Integer key : bst.iterator()) {
+            if (count++ >= 10) break;
+            System.out.print(key + " ");
+        }
+        System.out.println();
     }
 }
