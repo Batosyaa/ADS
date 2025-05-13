@@ -37,6 +37,14 @@ public class Main {
             System.out.print(v.getData() + " --> ");
         }
         System.out.println();
+
+        Vertex1.addNeighbor(Vertex6, 5.5);
+
+        System.out.println("Updated Dijkstra Path to the best city in Kazakhstan(Almaty):");
+        dijkstra.dijkstra(graph, Vertex5);
+        for (Vertex<String> v : dijkstra.pathTo(Vertex1)) {
+            System.out.print(v.getData() + " --> ");
+        }
     }
 }
 

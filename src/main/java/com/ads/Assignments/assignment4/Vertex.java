@@ -5,28 +5,27 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Vertex<T> {
-    private T data;
-    private Map<Vertex<T>, Double> adjacentVertices;
+    private final T data;
+    private final Map<Vertex<T>, Double> adjacentVertices;
 
     public Vertex(T data) {
         this.data = data;
         this.adjacentVertices = new HashMap<>();
-    }    
-
+    }  
+    
     public T getData() {
         return data;
     }
 
-    public Map<Vertex<T>, Double> getAdjacentVertices() {
-        return adjacentVertices;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public void setAdjacentVertices(Map<Vertex<T>, Double> adjacentVertices) {
-        this.adjacentVertices = adjacentVertices;
+    public void addNeighbor(Vertex<T> neighbor, double weight) {
+        if (adjacentVertices.containsKey(neighbor)) {
+            double currentWeight = adjacentVertices.get(neighbor);
+            if (weight < currentWeight) {
+                adjacentVertices.put(neighbor, weight);
+            }
+        } else {
+            adjacentVertices.put(neighbor, weight);
+        }
     }
 
     @Override
