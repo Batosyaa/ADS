@@ -1,17 +1,36 @@
 package com.ads.assignments.assignment4;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
-public abstract class Search<V> {
-    protected Map<Vertex<V>, Vertex<V>> edgeTo = new HashMap<>();
-    protected Vertex<V> start;
+public class Search<Vertex> {
+    protected Set<Vertex> marked;
+    protected Map<Vertex, Vertex> edgeTo;
+    protected final Vertex source;
 
-    public Search(WeightedGraph<V> graph, Vertex<V> start) {
-        this.start = start;
+    public Search(Vertex source) {
+        this.source = source;
+        marked = new HashSet<>();
+        edgeTo = new HashMap<>();
     }
 
-    public abstract boolean hasPathTo(Vertex<V> vertex);
+    public boolean hasPathTo(Vertex v) {
+        return marked.contains(v);
+    }
 
-    public abstract Iterable<Vertex<V>> pathTo(Vertex<V> vertex);
+    public Iterable<Vertex> pathTo(Vertex v) {
+        if (!hasPathTo(v)) return null;
+
+        LinkedList<Vertex> ls = new LinkedList<>();
+        for (Vertex i = v; i != source; i = edgeTo.get(i)) {
+            ls.push(i); // inverted adding
+        }
+
+        ls.push(source);
+
+        return ls;
+    }
 }
