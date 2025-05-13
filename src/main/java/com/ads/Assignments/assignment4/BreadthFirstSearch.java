@@ -1,31 +1,47 @@
 package com.ads.assignments.assignment4;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
-public class BreadthFirstSearch<Vertex> extends Search<Vertex>{
-    public BreadthFirstSearch(UnweightedGraph<Vertex> graph, Vertex source) {
-        super(source);
+public class BreadthFirstSearch<T> {
+    private final Set<Vertex<T>> visited = new HashSet<>();
+    private final Map<Vertex<T>, Vertex<T>> edgeTo = new HashMap<>();
 
-        bfs(graph, source);
-    }
-
-    private void bfs(UnweightedGraph<Vertex> graph, Vertex current) {
-        marked.add(current);
-
-
-        Queue<Vertex> queue = new LinkedList<>();
-        queue.add(current); //[0]
+    public void BreadthFirstSearch(WeightedGraph<T> graph, Vertex<T> source) {
+        Queue<Vertex<T>> queue = new LinkedList<>();
+        visited.add(source);
+        queue.add(source);
 
         while (!queue.isEmpty()) {
-            Vertex v = queue.remove(); // []
-
-            for (Vertex vertex : graph.adjacencyList(v)) {
-                if (!marked.contains(vertex)) {
-                    marked.add(vertex);
-                    edgeTo.put(vertex, v); // {[1,0] [2,0] [3,0] [4 0] [5 1] [6 1] [7 2]}
-                    queue.add(vertex); // [1,2,3,4]
+            Vertex<T> current = queue.poll();
+            for (Vertex<T> neighbor : graph.getAdjacency(current).keySet()) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    edgeTo.put(neighbor, current);
+                    queue.add(neighbor);
                 }
             }
         }
     }
+
+    public List<Vertex<T>> pathTo(Vertex<T> dest) {
+        List<Vertex<T>> path = new ArrayList<>();
+        if (!visited.contains(dest)) {
+            return path;
+        }
+
+        for (Vertex<T> at = dest; at != null; at = edgeTo.get(at)) {
+            path.add(at);
+        }
+
+        Collections.reverse(path);
+        return path;
+    }
+
 }
