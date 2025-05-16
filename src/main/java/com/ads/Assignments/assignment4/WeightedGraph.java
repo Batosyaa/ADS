@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class WeightedGraph<T> {
     private final boolean undirected;
-    private final Map<Vertex<T>, Map<Vertex<T>, Double>> adjVertices = new HashMap<>();
+    private final Map<T, Vertex<T>> adjVertices = new HashMap<>();
 
     public WeightedGraph() {
         this(true);
@@ -16,26 +16,41 @@ public class WeightedGraph<T> {
         this.undirected = undirected;
     }
 
-    public void addVertex(Vertex v) {
-        adjVertices.putIfAbsent(v, new HashMap<>());
+    public void addVertex(T data) {
+        adjVertices.put(data, new Vertex<>(data));
     }
 
-    public void addEdge(Vertex<T> from, Vertex<T> to, double weight) {
-        addVertex(from);
-        addVertex(to);
+    public void addEdge(T from, T to, double weight) {
+        if (!hasVertex(from)) {
+            addVertex(from);
+        }
 
-        adjVertices.get(from).put(to, weight);
+        if (!hasVertex(to)) {
+            addVertex(to);
+        }
+
+        // handle parallels and self-loops
+        
+        adjVertices.get(from).addNeighbor(to, weight);
 
         if(undirected) {
-            adjVertices.get(to).put(from, weight);
+            adjVertices.get(to).addNeighbor(from, weight);
         }
     }
 
-    public Map<Vertex<T>, Double> getAdjacency(Vertex<T> v) {
-        return adjVertices.getOrDefault(v, new HashMap<>());
+    public boolean hasVertex(T data) {
+        return adjVertices.containsKey(data);
     }
 
-    public Set<Vertex<T>> getAllVertices() {
-        return adjVertices.keySet();
+    public boolean hasEdge(T from, T to) {
+        return adjVertices.containsKey(from) && adjVertices.containsKey(to);
+    }
+
+    public Map<T, Double> getAdjacency(T current) {
+        return adjVertices.get((T) current).getAdjacentVertices();
+    }
+
+    public Set<T> getAllVertices() {
+        return Set.copyOf(adjVertices.keySet());
     }
 }

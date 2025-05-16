@@ -1,50 +1,57 @@
 package com.ads.assignments.assignment4;
 
-
 public class Main {
+    
     public static void main(String[] args) {
-        Vertex<String> Vertex1 = new Vertex<>("Almaty");
-        Vertex<String> Vertex2 = new Vertex<>("Astana");
-        Vertex<String> Vertex3 = new Vertex<>("Shymkent");
-        Vertex<String> Vertex4 = new Vertex<>("Atyrau");
-        Vertex<String> Vertex5 = new Vertex<>("Kostanay");
-        Vertex<String> Vertex6 = new Vertex<>("Kyzylorda");
+        WeightedGraph<String> weightedGraph = new WeightedGraph<>(true);
+        fillWithWeights(weightedGraph);
 
-        WeightedGraph<String> graph = new WeightedGraph<>(true);
-
-        graph.addEdge(Vertex1, Vertex2, 2.5);
-        graph.addEdge(Vertex2, Vertex3, 3.4);
-        graph.addEdge(Vertex3, Vertex4, 8.5);
-        graph.addEdge(Vertex4, Vertex5, 7.2);
-        graph.addEdge(Vertex5, Vertex6, 1.5);
-        graph.addEdge(Vertex6, Vertex1, 6);
-        graph.addEdge(Vertex1, Vertex3, 9);
-        graph.addEdge(Vertex2, Vertex4, 4.5);
+        System.out.println("Dijkstra:");
+        Search<String> djk = new DijkstraSearch<>(weightedGraph, "Almaty");
+        outputPath(djk, "Kyzylorda");
 
 
-        DijkstraSearch<String> dijkstra = new DijkstraSearch<>();
-        dijkstra.dijkstra(graph, Vertex5);
-        System.out.println("Dijkstra Path to the best city in Kazakhstan(Almaty):");
-        for (Vertex<String> v : dijkstra.pathTo(Vertex1)) {
-            System.out.print(v.getData() + " --> ");
+        System.out.println("--------------------------------");
+
+        UnweightedGraph<String> graph = new UnweightedGraph<>(true);
+        fillWithoutWeights(graph);
+
+        System.out.println("DFS:");
+        Search<String> dfs = new DepthFirstSearch<>(graph, "Almaty");
+        outputPath(dfs, "Kyzylorda");
+
+        System.out.println("--------------------------------");
+
+        System.out.println("BFS:");
+        Search<String> bfs = new BreadthFirstSearch<>(graph, "Almaty");
+        outputPath(bfs, "Kyzylorda");
+    }
+
+    public static void fillWithoutWeights(UnweightedGraph<String> graph) {
+        graph.addEdge("Almaty", "Astana"); // 16 - 19
+        graph.addEdge("Shymkent", "Atyrau");
+        graph.addEdge("Atyrau", "Astana");
+        graph.addEdge("Almaty", "Shymkent");
+        graph.addEdge("Shymkent", "Astana");
+        graph.addEdge("Astana", "Kostanay");
+        graph.addEdge("Shymkent", "Kyzylorda");
+    }
+
+    public static void fillWithWeights(WeightedGraph<String> graph) {
+        graph.addEdge("Almaty", "Astana", 2.1);
+        graph.addEdge("Shymkent", "Atyrau", 7.8);
+        graph.addEdge("Atyrau", "Astana", 7.1);
+        graph.addEdge("Almaty", "Shymkent", 7.2);
+        graph.addEdge("Shymkent", "Astana", 3.9);
+        graph.addEdge("Astana", "Kostanay", 3.5);
+        graph.addEdge("Shymkent", "Kyzylorda", 5.4);
+    }
+
+    public static void outputPath(Search<String> search, String key) {
+        for (String v : search.pathTo(key)) {
+            System.out.print(v + " -> ");
         }
+
         System.out.println();
-
-        BreadthFirstSearch<String> bfs = new BreadthFirstSearch<>();
-        bfs.BreadthFirstSearch(graph, Vertex1);
-        System.out.println("BFS Path to city Kyzylorda:");
-        for (Vertex<String> v : bfs.pathTo(Vertex6)) {
-            System.out.print(v.getData() + " --> ");
-        }
-        System.out.println();
-
-        Vertex1.addNeighbor(Vertex6, 5.5);
-
-        System.out.println("Updated Dijkstra Path to the best city in Kazakhstan(Almaty):");
-        dijkstra.dijkstra(graph, Vertex5);
-        for (Vertex<String> v : dijkstra.pathTo(Vertex1)) {
-            System.out.print(v.getData() + " --> ");
-        }
     }
 }
-

@@ -11,13 +11,13 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 public class DijkstraSearch<T> {
-    private final Map<Vertex<T>, Double> distance = new HashMap<>();
-    private final Map<Vertex<T>, Vertex<T>> edgeTo = new HashMap<>();
-    private final Set<Vertex<T>> visited = new HashSet<>();
+    private final Map<T, Double> distance = new HashMap<>();
+    private final Map<T, T> edgeTo = new HashMap<>();
+    private final Set<T> visited = new HashSet<>();
 
-    public void dijkstra(WeightedGraph<T> graph, Vertex<T> source) {
-        PriorityQueue<Vertex<T>> pq = new PriorityQueue<>(Comparator.comparingDouble(distance::get));
-        for (Vertex<T> v : graph.getAllVertices()) {
+    public void dijkstra(WeightedGraph<T> graph, T source) {
+        PriorityQueue<T> pq = new PriorityQueue<>(Comparator.comparingDouble(distance::get));
+        for (T v : graph.getAllVertices()) {
             distance.put(v, Double.MAX_VALUE);
         }
 
@@ -25,11 +25,11 @@ public class DijkstraSearch<T> {
         pq.add(source);
 
         while (!pq.isEmpty()) {
-            Vertex<T> current = pq.poll();
+            T current = pq.poll();
             if (visited.contains(current)) continue;
             visited.add(current);
 
-            for (Map.Entry<Vertex<T>, Double> neighbor : graph.getAdjacency(current).entrySet()) {
+            for (Map.Entry<T, Double> neighbor : graph.getAdjacency(current).entrySet()) {
                 double newDist = distance.get(current) + neighbor.getValue();
                 if (newDist < distance.get(neighbor.getKey())) {
                     distance.put(neighbor.getKey(), newDist);
@@ -40,11 +40,11 @@ public class DijkstraSearch<T> {
         }
     }
 
-    public List<Vertex<T>> pathTo(Vertex<T> dest) {
-        List<Vertex<T>> path = new ArrayList<>();
+    public List<T> pathTo(T dest) {
+        List<T> path = new ArrayList<>();
         if (!distance.containsKey(dest)) return path;
 
-        for (Vertex<T> at = dest; at != null; at = edgeTo.get(at)) {
+        for (T at = dest; at != null; at = edgeTo.get(at)) {
             path.add(at);
         }
         Collections.reverse(path);

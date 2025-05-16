@@ -10,17 +10,17 @@ import java.util.Queue;
 import java.util.Set;
 
 public class BreadthFirstSearch<T> {
-    private final Set<Vertex<T>> visited = new HashSet<>();
-    private final Map<Vertex<T>, Vertex<T>> edgeTo = new HashMap<>();
+    private final Set<T> visited = new HashSet<>();
+    private final Map<T, T> edgeTo = new HashMap<>();
 
-    public void BreadthFirstSearch(WeightedGraph<T> graph, Vertex<T> source) {
-        Queue<Vertex<T>> queue = new LinkedList<>();
+    public void BreadthFirstSearch(WeightedGraph<T> graph, T source) {
+        Queue<T> queue = new LinkedList<>();
         visited.add(source);
         queue.add(source);
 
         while (!queue.isEmpty()) {
-            Vertex<T> current = queue.poll();
-            for (Vertex<T> neighbor : graph.getAdjacency(current).keySet()) {
+            T current = queue.poll();
+            for (T neighbor : graph.getAdjacency(current).keySet()) {
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
                     edgeTo.put(neighbor, current);
@@ -30,14 +30,14 @@ public class BreadthFirstSearch<T> {
         }
     }
 
-    public List<Vertex<T>> pathTo(Vertex<T> dest) {
+    public List<Vertex<T>> pathTo(T dest) {
         List<Vertex<T>> path = new ArrayList<>();
         if (!visited.contains(dest)) {
             return path;
         }
 
-        for (Vertex<T> at = dest; at != null; at = edgeTo.get(at)) {
-            path.add(at);
+        for (T at = dest; at != null; at = edgeTo.get(at)) {
+            path.add(new Vertex<>(at));
         }
 
         Collections.reverse(path);

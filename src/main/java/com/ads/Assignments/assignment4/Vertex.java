@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Vertex<T> {
     private final T data;
-    private final Map<Vertex<T>, Double> adjacentVertices;
+    private final Map<T, Double> adjacentVertices;
 
     public Vertex(T data) {
         this.data = data;
@@ -17,15 +17,12 @@ public class Vertex<T> {
         return data;
     }
 
-    public void addNeighbor(Vertex<T> neighbor, double weight) {
-        if (adjacentVertices.containsKey(neighbor)) {
-            double currentWeight = adjacentVertices.get(neighbor);
-            if (weight < currentWeight) {
-                adjacentVertices.put(neighbor, weight);
-            }
-        } else {
-            adjacentVertices.put(neighbor, weight);
-        }
+    public Map<T, Double> getAdjacentVertices() {
+        return adjacentVertices;
+    }
+
+    public void addNeighbor(T neighbor, double weight) {
+        adjacentVertices.put(neighbor, weight);
     }
 
     @Override
