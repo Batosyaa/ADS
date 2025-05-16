@@ -1,24 +1,23 @@
 package com.ads.assignments.assignment4;
+import com.ads.assignments.assignment4.WeightedGraph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
-public class DijkstraSearch<T> {
+public class DijkstraSearch<T> extends Search<T> {
     private final Map<T, Double> distance = new HashMap<>();
-    private final Map<T, T> edgeTo = new HashMap<>();
     private final Set<T> visited = new HashSet<>();
 
-    public void dijkstra(WeightedGraph<T> graph, T source) {
+    public DijkstraSearch(WeightedGraph<T> graph, T source) {
+        super(source);
+        dijkstra(graph, source);
+    }
+
+    private void dijkstra(WeightedGraph<T> graph, T source) {
         PriorityQueue<T> pq = new PriorityQueue<>(Comparator.comparingDouble(distance::get));
-        for (T v : graph.getAllVertices()) {
-            distance.put(v, Double.MAX_VALUE);
+
+        // Initialize distances
+        for (T vertex : graph.getAllVertices()) {
+            distance.put(vertex, Double.MAX_VALUE);
         }
 
         distance.put(source, 0.0);
@@ -29,20 +28,24 @@ public class DijkstraSearch<T> {
             if (visited.contains(current)) continue;
             visited.add(current);
 
-            for (Map.Entry<T, Double> neighbor : graph.getAdjacency(current).entrySet()) {
-                double newDist = distance.get(current) + neighbor.getValue();
-                if (newDist < distance.get(neighbor.getKey())) {
-                    distance.put(neighbor.getKey(), newDist);
-                    edgeTo.put(neighbor.getKey(), current);
-                    pq.add(neighbor.getKey());
+            for (Map.Entry<T, Double> neighbor : graph.getNeighbors(current).entrySet()) {
+                T neighborVertex = neighbor.getKey();
+                double weight = neighbor.getValue();
+                double newDist = distance.get(current) + weight;
+
+                if (newDist < distance.get(neighborVertex)) {
+                    distance.put(neighborVertex, newDist);
+                    edgeTo.put(neighborVertex, current); // from Search<T>
+                    pq.add(neighborVertex);
                 }
             }
         }
     }
 
+    @Override
     public List<T> pathTo(T dest) {
         List<T> path = new ArrayList<>();
-        if (!distance.containsKey(dest)) return path;
+        if (!hasPathTo(dest)) return path;
 
         for (T at = dest; at != null; at = edgeTo.get(at)) {
             path.add(at);
@@ -51,7 +54,12 @@ public class DijkstraSearch<T> {
         return path;
     }
 
-    public double getDistance(Vertex<T> v) {
+    public double getDistance(T v) {
         return distance.getOrDefault(v, Double.MAX_VALUE);
+    }
+
+    @Override
+    public boolean hasPathTo(T v) {
+        return distance.containsKey(v) && distance.get(v) != Double.MAX_VALUE;
     }
 }

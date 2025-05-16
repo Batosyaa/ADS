@@ -1,12 +1,10 @@
 package com.ads.assignments.assignment4;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-public class UnweightedGraph<Vertex> {
+import java.util.*;
+
+public class UnweightedGraph<T> {
     private final boolean undirected;
-    private final Map<Vertex, List<Vertex>> map = new HashMap<>();
+    private final Map<T, List<T>> map = new HashMap<>();
 
     public UnweightedGraph() {
         this(true);
@@ -16,28 +14,22 @@ public class UnweightedGraph<Vertex> {
         this.undirected = undirected;
     }
 
-    public void addVertex(Vertex v) {
-        if (hasVertex(v))
-            return;
-
-        map.put(v, new LinkedList<>());
+    public void addVertex(T v) {
+        map.putIfAbsent(v, new LinkedList<>());
     }
 
-    public void addEdge(Vertex source, Vertex dest) {
-        if (!hasVertex(source))
-            addVertex(source);
+    public void addEdge(T source, T dest) {
+        addVertex(source);
+        addVertex(dest);
 
-        if (!hasVertex(dest))
-            addVertex(dest);
-
-        if (hasEdge(source, dest)
-                || source.equals(dest))
-            return;
+        if (source.equals(dest)) return;
+        if (map.get(source).contains(dest)) return;
 
         map.get(source).add(dest);
 
-        if (undirected)
+        if (undirected) {
             map.get(dest).add(source);
+        }
     }
 
     public int getVerticesCount() {
@@ -46,29 +38,26 @@ public class UnweightedGraph<Vertex> {
 
     public int getEdgesCount() {
         int count = 0;
-        for (Vertex v : map.keySet()) {
-            count += map.get(v).size();
+        for (List<T> neighbors : map.values()) {
+            count += neighbors.size();
         }
 
-        if (undirected)
-            count /= 2;
-
-        return count;
+        return undirected ? count / 2 : count;
     }
 
-
-    public boolean hasVertex(Vertex v) {
+    public boolean hasVertex(T v) {
         return map.containsKey(v);
     }
 
-    public boolean hasEdge(Vertex source, Vertex dest) {
-        if (!hasVertex(source)) return false;
-        return map.get(source).contains(dest);
+    public boolean hasEdge(T source, T dest) {
+        return hasVertex(source) && map.get(source).contains(dest);
     }
 
-    public List<Vertex> adjacencyList(Vertex v) {
-        if (!hasVertex(v)) return null;
+    public List<T> adjacencyList(T v) {
+        return map.getOrDefault(v, new LinkedList<>());
+    }
 
-        return map.get(v);
+    public Set<T> getAllVertices() {
+        return map.keySet();
     }
 }

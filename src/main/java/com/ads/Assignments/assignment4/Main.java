@@ -7,7 +7,7 @@ public class Main {
         fillWithWeights(weightedGraph);
 
         System.out.println("Dijkstra:");
-        Search<String> djk = new DijkstraSearch<>(weightedGraph, "Almaty");
+        Search<String> djk = new DijkstraSearch<String>(weightedGraph, "Almaty");
         outputPath(djk, "Kyzylorda");
 
 

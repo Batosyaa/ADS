@@ -11,6 +11,7 @@ public class Search<Vertex> {
     protected Map<Vertex, Vertex> edgeTo;
     protected final Vertex source;
 
+
     public Search(Vertex source) {
         this.source = source;
         marked = new HashSet<>();
@@ -26,7 +27,7 @@ public class Search<Vertex> {
 
         LinkedList<Vertex> ls = new LinkedList<>();
         for (Vertex i = v; i != source; i = edgeTo.get(i)) {
-            ls.push(i); // inverted adding
+            ls.push(i);
         }
 
         ls.push(source);
