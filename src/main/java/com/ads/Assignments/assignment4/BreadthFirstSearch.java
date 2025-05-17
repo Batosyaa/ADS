@@ -9,11 +9,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class BreadthFirstSearch<T> {
+public class BreadthFirstSearch<T> extends Search<T> {
     private final Set<T> visited = new HashSet<>();
     private final Map<T, T> edgeTo = new HashMap<>();
 
-    public void BreadthFirstSearch(WeightedGraph<T> graph, T source) {
+    public BreadthFirstSearch(WeightedGraph<T> graph, T source) {
+        super(source);
         Queue<T> queue = new LinkedList<>();
         visited.add(source);
         queue.add(source);
@@ -30,14 +31,14 @@ public class BreadthFirstSearch<T> {
         }
     }
 
-    public List<Vertex<T>> pathTo(T dest) {
-        List<Vertex<T>> path = new ArrayList<>();
+    public List<T> pathTo(T dest) {
+        List<T> path = new ArrayList<>();
         if (!visited.contains(dest)) {
             return path;
         }
 
         for (T at = dest; at != null; at = edgeTo.get(at)) {
-            path.add(new Vertex<>(at));
+            path.add(at);
         }
 
         Collections.reverse(path);
