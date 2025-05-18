@@ -1,5 +1,4 @@
 package com.ads.assignments.assignment4;
-import com.ads.assignments.assignment4.WeightedGraph;
 
 import java.util.*;
 
@@ -15,7 +14,6 @@ public class DijkstraSearch<T> extends Search<T> {
     private void dijkstra(WeightedGraph<T> graph, T source) {
         PriorityQueue<T> pq = new PriorityQueue<>(Comparator.comparingDouble(distance::get));
 
-        // Initialize distances
         for (T vertex : graph.getAllVertices()) {
             distance.put(vertex, Double.MAX_VALUE);
         }
@@ -28,7 +26,8 @@ public class DijkstraSearch<T> extends Search<T> {
             if (visited.contains(current)) continue;
             visited.add(current);
 
-            for (Map.Entry<T, Double> neighbor : graph.getNeighbors(current).entrySet()) {
+            Vertex<T> currentVertex = graph.getVertex(current);
+            for (Map.Entry<T, Double> neighbor : graph.getNeighbors(current, currentVertex).entrySet()) {
                 T neighborVertex = neighbor.getKey();
                 double weight = neighbor.getValue();
                 double newDist = distance.get(current) + weight;
@@ -45,6 +44,7 @@ public class DijkstraSearch<T> extends Search<T> {
     @Override
     public List<T> pathTo(T dest) {
         List<T> path = new ArrayList<>();
+
         if (!hasPathTo(dest)) return path;
 
         for (T at = dest; at != null; at = edgeTo.get(at)) {

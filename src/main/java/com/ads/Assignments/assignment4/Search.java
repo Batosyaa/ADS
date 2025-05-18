@@ -18,20 +18,22 @@ public class Search<Vertex> {
         edgeTo = new HashMap<>();
     }
 
+
+
     public boolean hasPathTo(Vertex v) {
-        return marked.contains(v);
+        return !marked.contains(v);
     }
 
     public Iterable<Vertex> pathTo(Vertex v) {
-        if (!hasPathTo(v)) return null;
+        if (hasPathTo(v)) return null;
 
-        LinkedList<Vertex> ls = new LinkedList<>();
+        LinkedList<Vertex> list = new LinkedList<>();
         for (Vertex i = v; i != source; i = edgeTo.get(i)) {
-            ls.push(i);
+            list.push(i);
         }
 
-        ls.push(source);
+        list.push(source);
 
-        return ls;
+        return list;
     }
 }

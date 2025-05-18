@@ -6,10 +6,6 @@ public class UnweightedGraph<T> {
     private final boolean undirected;
     private final Map<T, List<T>> map = new HashMap<>();
 
-    public UnweightedGraph() {
-        this(true);
-    }
-
     public UnweightedGraph(boolean undirected) {
         this.undirected = undirected;
     }
